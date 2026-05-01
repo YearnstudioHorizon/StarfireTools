@@ -80,14 +80,15 @@ jobs:
           path: dist
           merge-multiple: true
 
-      - name: Semantic Release (auto version + tag + GitHub Release)
-        uses: cycjimmy/semantic-release-action@v4
+      - name: Setup Node (for semantic-release)
+        uses: actions/setup-node@v4
         with:
-          semantic_version: 23
-          extra_plugins: |
-            conventional-changelog-conventionalcommits
-            @semantic-release/commit-analyzer
-            @semantic-release/release-notes-generator
-            @semantic-release/github
+          node-version: 20
+
+      - name: Install release deps
+        run: npm install --no-audit --no-fund
+
+      - name: Semantic Release (auto version + tag + GitHub Release)
+        run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
