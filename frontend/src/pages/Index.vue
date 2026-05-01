@@ -85,7 +85,9 @@ onMounted(() => {
   refreshYiyan();
 });
 function openGithub() {
-  window.runtime.BrowserOpenURL("https://github.com/YearnstudioHorizon");
+  window.runtime.BrowserOpenURL(
+    "https://github.com/YearnstudioHorizon/StarfireTools",
+  );
 }
 </script>
 

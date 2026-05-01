@@ -9,7 +9,9 @@ GetVersion().then((data) => {
 });
 
 function openGithub() {
-  window.runtime.BrowserOpenURL("https://github.com/YearnstudioHorizon");
+  window.runtime.BrowserOpenURL(
+    "https://github.com/YearnstudioHorizon/StarfireTools",
+  );
 }
 
 function openYearnstudio() {
