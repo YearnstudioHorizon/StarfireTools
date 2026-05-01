@@ -17,3 +17,7 @@ wails dev
 ### 许可证
 
 Apache 2.0
+
+### CI/CD
+
+流水线自动构建并发布产物, 请使用语义化commit msg, 如 `feat: ...、fix: ...`
