@@ -1,0 +1,41 @@
+/* style.css */
+:root {
+  --bg-color: #f9f9f9;
+  --font-color: #202020;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #202020;
+    --bg-color: #202020;
+    --font-color: #f9f9f9;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Wails frameless window dragging
+   Wails Desktop runtime starts a drag when the clicked element has:
+   --wails-draggable: drag
+   These rules let you keep using the convenient data attributes. */
+[data-wails-drag] {
+  --wails-draggable: drag;
+}
+
+/* Add this attribute to interactive controls inside a drag region (buttons, inputs, etc.) */
+[data-wails-no-drag] {
+  --wails-draggable: no-drag;
+}
+
+* {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+}
