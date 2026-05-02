@@ -27,7 +27,7 @@ onMounted(async () => {
   >
     <img :src="logo" alt="logo" style="height: 55%; margin-left: 20px" />
     <div style="margin-left: 5px; font-size: large">
-      星火工具箱&nbsp;StarfireTools
+      星火工具箱&nbsp;Starfire&nbsp;Tools
     </div>
     <div style="margin-left: auto">
       <div class="window-controls">

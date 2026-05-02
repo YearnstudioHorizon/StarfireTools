@@ -1,4 +1,5 @@
 <script setup>
+import { GetStatus } from "../../wailsjs/go/main/App";
 const props = defineProps({
   title: {
     type: String,
@@ -19,8 +20,18 @@ const props = defineProps({
     required: false,
     default: false,
   },
+  group: {
+    type: String,
+    required: true,
+  },
 });
-
+GetStatus(props.group, props.title)
+  .then((data, err) => {
+    console.log('[Debug]组件"' + props.title + '"获取到状态' + data);
+  })
+  .catch((err) => {
+    console.log('[Debug]组件"' + props.title + '"获取状态出错: ' + err);
+  });
 const emit = defineEmits(["switch", "update:enabled"]);
 
 function switchChoice() {
