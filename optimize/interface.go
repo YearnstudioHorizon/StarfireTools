@@ -1,9 +1,9 @@
 package optimize
 
 type OptimizeItem interface {
-	Do() error                // 开启
-	Cancel() error            // 关闭
-	GetStatus() (bool, error) // 获取当前状态
+	Do() error                // 在功能被打开时被调用
+	Cancel() error            // 在功能被关闭时被调用
+	GetStatus() (bool, error) // 获取当前开启关闭状态
 	GetName() string          // 获取名称
 	GetDesc() string          // 获取描述
 }

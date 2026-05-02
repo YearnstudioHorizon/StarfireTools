@@ -21,7 +21,7 @@ type ItemGroup struct {
 }
 
 func (group *ItemGroup) addContent(item optimize.OptimizeItem) {
-	fmt.Printf("注册了名为%v的优化项, 描述为%v\n", item.GetName(), item.GetDesc())
+	// fmt.Printf("注册了名为%v的优化项, 描述为%v\n", item.GetName(), item.GetDesc())
 	group.ItemNames = append(group.ItemNames, item.GetName())
 	group.ItemDescs = append(group.ItemDescs, item.GetDesc())
 	group.Items = append(group.Items, item)
@@ -42,6 +42,14 @@ type App struct {
 	ItemsGroups   []ItemGroup
 }
 
+func AppendNewGroup(target []ItemGroup, name string, items []optimize.OptimizeItem) []ItemGroup {
+	group := ItemGroup{Name: name}
+	for _, v := range items {
+		group.addContent(v)
+	}
+	return append(target, group)
+}
+
 // NewApp creates a new App application struct
 func NewApp() *App {
 	u, _ := user.Current()
@@ -55,15 +63,8 @@ func NewApp() *App {
 	var CPUMHz float64 = cu[0].Mhz
 	CPUCore := cu[0].Cores
 	// 初始化配置组
-	visualGroup := ItemGroup{Name: "系统效果优化"}
-	// 初始化接口
-	exploerBackground := optimize.NewExploreBackground()
-	exploerBackground1 := optimize.NewExploreBackground1()
-	visualGroup.addContent(exploerBackground)
-	visualGroup.addContent(exploerBackground1)
-
 	var ItemGroups []ItemGroup
-	ItemGroups = append(ItemGroups, visualGroup)
+	ItemGroups = AppendNewGroup(ItemGroups, "系统效果优化", []optimize.OptimizeItem{optimize.NewExploreBackground(), optimize.NewTest1()})
 
 	return &App{
 		Username:      u.Username,
