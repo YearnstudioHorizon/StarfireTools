@@ -104,9 +104,9 @@ function openGithub() {
       "
     >
       <Banner
-        title="欢迎使用星火工具箱 StarfireTools"
+        title="欢迎使用 星火工具箱 Starfire Tools"
         desc="好用的话, 给我们点个Star吧"
-        button-text="访问Github↗"
+        button-text="访问 Github↗"
         @action="openGithub"
       ></Banner>
       <div class="cards">
