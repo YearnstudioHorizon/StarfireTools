@@ -65,7 +65,7 @@ function openStarFire() {
             <div class="support-desc">您可以在这里查看源码</div>
           </div>
           <a href="#About" class="support-link" @click="openGithub">
-            访问官网
+            访问仓库
           </a>
         </div>
         <div class="support-content">

@@ -1,44 +1,74 @@
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import ChoiceGroup from "../components/ChoiceGroup.vue";
 import Choice from "../components/Choice.vue";
-
-const settings = reactive({
-  perf: {
-    enabled: false,
-    title: "启用性能调整",
-    desc: "将系统视觉效果切换为“调整为最佳性能”。",
-  },
-  restore: {
-    enabled: true,
-    title: "禁用系统还原",
-    desc: "关闭系统还原策略和配置入口。",
-  },
-  error: {
-    enabled: false,
-    title: "禁用错误报告",
-    desc: "禁用 Windows Error Reporting。",
-  },
+import { GetItemGroups, Do, Cancel } from "../../wailsjs/go/main/App";
+const itemGroups = ref([]);
+const items = ref({});
+GetItemGroups().then((data) => {
+  data.forEach((element, k) => {
+    console.log("[Debug]组名: " + element.name);
+    itemGroups.value.push(element.name);
+    let itemList = [];
+    element.items.forEach((v, key) => {
+      const temp = {
+        name: v,
+        desc: element.items_descs[key],
+        enabled: false,
+        disabled: false,
+      };
+      console.log("  [Debug]优化项名称: " + v);
+      itemList.push(temp);
+    });
+    items.value[element.name] = itemList;
+    // console.log(itemList);
+  });
 });
 
-const handleSwitch = (key) => {
-  settings[key].enabled = !settings[key].enabled;
+const handleSwitch = (key, title) => {
+  items.value[title].forEach((v) => {
+    if (v.name == key) {
+      // 找到了组件对象
+      console.log(
+        key +
+          "进行了状态切换, 来自组" +
+          title +
+          ", 该组件切换前启用状态: " +
+          v.enabled,
+      );
+      v.enabled = !v.enabled; // 切换启用状态
+      v.disabled = true; // 禁用组件 防抖
+      if (v.enabled) {
+        // 启用
+        Do(title, key).then(() => {
+          items.value[title].disabled = false;
+        });
+      } else {
+        // 禁用
+        Cancel(title, key).then(() => {
+          items.value[title].disabled = false;
+        });
+      }
+    }
+  });
 };
 </script>
 
 <template>
-  <ChoiceGroup title="系统与体验">
+  <ChoiceGroup v-for="(v, k) in itemGroups" :title="v">
     <Choice
-      v-for="(val, key) in settings"
+      v-for="(val, key) in items[v]"
       :key="key"
-      :title="val.title"
+      :title="val.name"
       :desc="val.desc"
       :enabled="val.enabled"
-      @switch="handleSwitch(key)"
+      :disabled="val.disabled"
+      :group="v"
+      @switch="handleSwitch(val.name, v)"
     />
   </ChoiceGroup>
 
-  <ChoiceGroup title="更多选项">
+  <!-- <ChoiceGroup title="更多选项">
     <Choice
       v-for="(val, key) in settings"
       :key="key"
@@ -47,6 +77,5 @@ const handleSwitch = (key) => {
       :enabled="val.enabled"
       @switch="handleSwitch(key)"
     />
-  </ChoiceGroup>
+  </ChoiceGroup> -->
 </template>
-
