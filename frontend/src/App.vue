@@ -22,7 +22,12 @@ function exit() {
     <div class="app-body">
       <Sidebar />
       <main class="app-main" data-wails-no-drag>
-        <RouterView />
+        <!-- 注意这里提取了 route，并绑定了 key -->
+        <RouterView v-slot="{ Component, route }">
+          <transition name="slide-up" mode="out-in">
+            <component :is="Component" :key="route.fullPath" />
+          </transition>
+        </RouterView>
       </main>
     </div>
   </div>
@@ -60,5 +65,18 @@ function exit() {
 .app-main::-webkit-scrollbar {
   width: 0;
   height: 0;
+}
+
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all 0.06s ease-out;
+}
+.slide-up-enter-from {
+  opacity: 0;
+  transform: translateY(20px); /* 新组件从下方 20px 处浮现 */
+}
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(-20px); /* 旧组件向上方 20px 处渐隐 */
 }
 </style>

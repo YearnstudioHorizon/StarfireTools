@@ -55,27 +55,18 @@ const handleSwitch = (key, title) => {
 </script>
 
 <template>
-  <ChoiceGroup v-for="(v, k) in itemGroups" :title="v">
-    <Choice
-      v-for="(val, key) in items[v]"
-      :key="key"
-      :title="val.name"
-      :desc="val.desc"
-      :enabled="val.enabled"
-      :disabled="val.disabled"
-      :group="v"
-      @switch="handleSwitch(val.name, v)"
-    />
-  </ChoiceGroup>
-
-  <!-- <ChoiceGroup title="更多选项">
-    <Choice
-      v-for="(val, key) in settings"
-      :key="key"
-      :title="val.title"
-      :desc="val.desc"
-      :enabled="val.enabled"
-      @switch="handleSwitch(key)"
-    />
-  </ChoiceGroup> -->
+  <div>
+    <ChoiceGroup v-for="(v, k) in itemGroups" :key="k" :title="v">
+      <Choice
+        v-for="(val, key) in items[v]"
+        :key="key"
+        :title="val.name"
+        :desc="val.desc"
+        :enabled="val.enabled"
+        :disabled="val.disabled"
+        :group="v"
+        @switch="handleSwitch(val.name, v)"
+      />
+    </ChoiceGroup>
+  </div>
 </template>
